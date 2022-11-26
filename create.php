@@ -1,88 +1,77 @@
-<h1>My SQL Connection: Create Database</h1>
-
+<h1>Welcome to my EF5_Databrojekt</h1>
 <?php
 
 $servername = "localhost";
 $username = "root";
 $password = "root";
 
+//Connecting to Server and Setting Error Trap
 try{
-    $conn = new PDO("mysql:host=$servername;dbname=ef5_base", $username, $password);
+    $conn = new PDO("mysql:host=$servername;dbname=ef5_proj",$username,$password);
     $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
     echo "Connected!<br>";
-}catch (PDOException $e){
+}catch(PDOException $e){
     echo "connection failed.<br>" . $e -> getmessage();
 }
 
-//Beliebtheit lehrpersonen
-// Entitäten:
-//  -lehrpersonen
-//  -id_lehrperson
-//      --Name: String
-//      --Vorname: String
-//      --Schulfach: Fremdschlüssel Schulfach
-//
-//  -bewertung
-//      --id_bewertung
-//      --Humor: 1-6
-//      --Unterricht: 1-6
-//      --Prüfungen: 1-6
-//      --Fachwissen: 1-6
-//      --Querbezug: Boolean
-//      --Lehrperson: Fremdschlüssel Lehrperson
-//
-//  -Schulfach
-//      --id_schulfach
-//      --Name:String
-
-$createTableLehrperson ='
-    Create Table lehrperson(
-        id_lehrperson INT AUTO_INCREMENT,
-        first_name VARCHAR(100) NOT NULL,
-        last_name VARCHAR(100) NOT NULL,
-        schulfach INT NOT NULL,
-        PRIMARY KEY(id_lehrperson),
-        FOREIGN KEY(schulfach) REFERENCES schulfach(id_schulfach)
-    );';
-
-$createTabeleBewertung ='
-    Create Table bewertung(
-        id_bewertung INT AUTO_INCREMENT,
-        humor TINYINT NOT NULL,
-        unterricht TINYINT NOT NULL,
-        pruefungen TINYINT NOT NULL,
-        fachwissen TINYINT NOT NULL,
-        querbezug TINYINT NOT NULL,
-        lehrperson INT NOT NULL,
-        PRIMARY KEY(id_bewertung),
-        FOREIGN KEY(lehrperson) REFERENCES lehrperson(id_lehrperson)
-    );';
-
-$createTabeleSchulfach ='
-    Create Table schulfach(
-        id_schulfach INT AUTO_INCREMENT,
+$createTablePlace ='
+    CREATE TABLE place(
+        id_place INT AUTO_INCREMENT,
         name VARCHAR(100) NOT NULL,
-        PRIMARY KEY(id_schulfach)
+        PRIMARY KEY(id_place),
     );';
 
-$createTableVLS ='
-    Create Table vls(
-        id_vls INT AUTO_INCREMENT,
-        lehrperson INT NOT NULL,
-        schulfach INT NOT NULL,
-        PRIMARY KEY(id_vls),
-        FOREIGN KEY(lehrperson) REFERENCES lehrperson(id_lehrperson),
-        FOREIGN KEY(schulfach) REFERENCES schulfach(id_schulfach)
+$createTableLender ='
+    CREATE TABLE lender(
+        id_lender INT AUTO_INCREMENT,
+        name VARCHAR(100) NOT NULL,
+        money_owed VARCHAR(100) NOT NULL,
+        PRIMARY KEY(id_lender),
     );';
 
-try {
-    $conn->exec($createTabeleSchulfach);
-    $conn->exec($createTableLehrperson);
-    $conn->exec($createTabeleBewertung);
-    //$conn->exec($createTableVLS);
+$createTableMaterial ='
+    CREATE TABLE material(
+        id_material INT AUTO_INCREMENT,
+        name VARCHAR(100) NOT NULL,
+        anzahl_DMX TINYINT NOT NULL,
+        watt_draw TINYINT NOT NULL,
+        anzahl TINYINT NOT NULL,
+        place INT NOT NULL,
+        lender INT NOT NULL,
+        PRIMARY KEY(id_material),
+        FOREIGN KEY(place) REFRENCES(id_place),
+        FOREIGN KEY(lender) REFRENCES(id_lender),
+    );';
+
+$createTableSchicht ='
+    CREATE TABLE schicht(
+        id_schicht INT AUTO_INCREMENT,
+        name VARCHA(100) NOT NULL,
+        from_to DATETIME NOT NULL,
+        PRIMARY KEY(id_schicht),
+    );';
+
+$createTableOperator ='
+    CREATE TABLE operator(
+        id_operator INT AUTO_INCREMENT,
+        name VARCHAR(100) NOT NULL,
+        job VARCHAR(100) NOT NULL,
+        schicht INT NOT NULL,
+        place INT NOT NULL,
+        PRIMARY KEY(id_operator),
+        FOREIGN KEY(schicht) REFRENCES(id_schicht),
+        FOREIGN KEY(place) REFRENCES(id_place),
+    );';
+
+try{
+    $conn->exec($createTablePlace);
+    $conn->exec($createTableLender);
+    $conn->exec($createTableMaterial);
+    $conn->exec($createTableSchicht);
+    $conn->exec($createTableOperator);
     echo "Created<br>";
 }catch(PDOException $e){
-    echo "Create Table Lehrpersonen failed:<br>" . $e->getMessage();
+    echo "create failed:<br>" . $e->getMessage();
 }
 
 ?>

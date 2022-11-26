@@ -18,8 +18,8 @@ try{
 }
 
 try{
-    $conn->exec("DROP DATABASE ef5_base;");
-    $conn->exec("CREATE DATABASE ef5_base");
+    $conn->exec("DROP DATABASE ef5_proj;");
+    $conn->exec("CREATE DATABASE ef5_proj");
     echo "Database flushed.<br>";
 } catch(PDOException $e){
     echo "Action failed: ".$e->getMessage()."<br>";
