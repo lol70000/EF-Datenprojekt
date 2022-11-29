@@ -18,7 +18,7 @@ $createTablePlace ='
     CREATE TABLE place(
         id_place INT AUTO_INCREMENT,
         name VARCHAR(100) NOT NULL,
-        PRIMARY KEY(id_place),
+        PRIMARY KEY(id_place)
     );';
 
 $createTableLender ='
@@ -26,7 +26,7 @@ $createTableLender ='
         id_lender INT AUTO_INCREMENT,
         name VARCHAR(100) NOT NULL,
         money_owed VARCHAR(100) NOT NULL,
-        PRIMARY KEY(id_lender),
+        PRIMARY KEY(id_lender)
     );';
 
 $createTableMaterial ='
@@ -39,16 +39,16 @@ $createTableMaterial ='
         place INT NOT NULL,
         lender INT NOT NULL,
         PRIMARY KEY(id_material),
-        FOREIGN KEY(place) REFRENCES(id_place),
-        FOREIGN KEY(lender) REFRENCES(id_lender),
+        FOREIGN KEY(place) REFERENCES place(id_place),
+        FOREIGN KEY(lender) REFERENCES lender(id_lender)
     );';
 
 $createTableSchicht ='
     CREATE TABLE schicht(
         id_schicht INT AUTO_INCREMENT,
-        name VARCHA(100) NOT NULL,
-        from_to DATETIME NOT NULL,
-        PRIMARY KEY(id_schicht),
+        name VARCHAR(100) NOT NULL,
+        from_to INT NOT NULL,
+        PRIMARY KEY(id_schicht)
     );';
 
 $createTableOperator ='
@@ -59,8 +59,8 @@ $createTableOperator ='
         schicht INT NOT NULL,
         place INT NOT NULL,
         PRIMARY KEY(id_operator),
-        FOREIGN KEY(schicht) REFRENCES(id_schicht),
-        FOREIGN KEY(place) REFRENCES(id_place),
+        FOREIGN KEY(schicht) REFERENCES schicht(id_schicht),
+        FOREIGN KEY(place) REFERENCES place(id_place)
     );';
 
 try{

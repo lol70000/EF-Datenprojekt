@@ -10,7 +10,7 @@ try{
     $link = new PDO("mysql:host=$servername;dbname=ef5_proj", $username, $password);
     $link->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
-    $place = [Turnhalle, Robotic, Aula];
+    $place = ["Turnhalle","Robotic", "Aula"];
     foreach ($place as $number){
         $lol = $link->prepare("INSERT INTO place(name) Values('$number')");
     }
