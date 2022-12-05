@@ -47,7 +47,8 @@ $createTableSchicht ='
     CREATE TABLE schicht(
         id_schicht INT AUTO_INCREMENT,
         name VARCHAR(100) NOT NULL,
-        from_to INT NOT NULL,
+        from INT NOT NULL,
+        to INT NOT NULL,
         PRIMARY KEY(id_schicht)
     );';
 
@@ -56,9 +57,17 @@ $createTableOperator ='
         id_operator INT AUTO_INCREMENT,
         name VARCHAR(100) NOT NULL,
         job VARCHAR(100) NOT NULL,
+        PRIMARY KEY(id_operator),
+    );';
+
+$createTableConnect ='
+    CREATE TABLE connect(
+        id_connect INT AUTO_INCREMENT,
+        op INT NOT NULL,
         schicht INT NOT NULL,
         place INT NOT NULL,
-        PRIMARY KEY(id_operator),
+        PRIMARY KEY(id_connect),
+        FOREIGN KEY(op) REFERENCES operator(id_operator),
         FOREIGN KEY(schicht) REFERENCES schicht(id_schicht),
         FOREIGN KEY(place) REFERENCES place(id_place)
     );';
