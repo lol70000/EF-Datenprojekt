@@ -17,8 +17,10 @@ try{
     echo "Connection failed.<br>". $e->getMessage();
 }
 
+//Droping Database and creating it again in order to enshure no items are in the Database twice
+
 try{
-    $conn->exec("DROP DATABASE ef5_proj;");
+    $conn->exec("DROP DATABASE ef5_proj");
     $conn->exec("CREATE DATABASE ef5_proj");
     echo "Database flushed.<br>";
 } catch(PDOException $e){
