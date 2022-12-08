@@ -1,4 +1,4 @@
-<h1>Welcome to my EF5_Databrojekt</h1>
+<h1 style="color:rgb(87, 119, 143)">Welcome to my EF5_Databrojekt</h1>
 <?php
 
 $servername = "localhost";
@@ -9,9 +9,9 @@ $password = "root";
 try{
     $conn = new PDO("mysql:host=$servername;dbname=ef5_proj",$username,$password);
     $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-    echo "Connected!<br>";
+    echo "<p style='color:rgb(87, 119, 143)'>Connected!<br></p>";
 }catch(PDOException $e){
-    echo "connection failed.<br>" . $e -> getmessage();
+    echo "<p style='color:rgb(87, 119, 143)'>connection failed.<br>" . $e -> getmessage()."</p>";
 }
 
 //Preparing all Databases
@@ -37,6 +37,7 @@ $createTableMaterial ='
         name VARCHAR(100) NOT NULL,
         anzahl_DMX TINYINT NOT NULL,
         watt_draw INT NOT NULL,
+        connection_type VARCHAR(100),
         anzahl INT NOT NULL,
         place INT NOT NULL,
         lender INT NOT NULL,
@@ -63,7 +64,7 @@ $createTableOperator ='
     );';
 
 $createTableConnect ='
-    CREATE TABLE connect(
+    CREATE TABLE connection(
         id_connect INT AUTO_INCREMENT,
         op INT NOT NULL,
         schicht INT NOT NULL,
@@ -83,9 +84,9 @@ try{
     $conn->exec($createTableSchicht);
     $conn->exec($createTableOperator);
     $conn->exec($createTableConnect);
-    echo "Created<br>";
+    echo "<p style='color:rgb(87, 119, 143)'>Created<br></p>";
 }catch(PDOException $e){
-    echo "create failed:<br>" . $e->getMessage();
+    echo "<p style='color:rgb(87, 119, 143)'>create failed:<br>" . $e->getMessage()."</p>";
 }
 
 ?>

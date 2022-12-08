@@ -1,4 +1,4 @@
-<h1>
+<h1 style="color:rgb(87, 119, 143)">
 MySQL: Delete Database
 </h1>
 
@@ -12,9 +12,9 @@ $password = "root";
 try{
     $conn = new PDO("mysql:host=$servername;dbname=ef5_base", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected!<br>";
+    echo "<p style='color:rgb(87, 119, 143)'>Connected!<br></p>";
 } catch (PDOException $e){
-    echo "Connection failed.<br>". $e->getMessage();
+    echo "<p style='color:rgb(87, 119, 143)'>Connection failed.<br></p>". $e->getMessage();
 }
 
 //Droping Database and creating it again in order to enshure no items are in the Database twice
@@ -22,9 +22,9 @@ try{
 try{
     $conn->exec("DROP DATABASE ef5_proj");
     $conn->exec("CREATE DATABASE ef5_proj");
-    echo "Database flushed.<br>";
+    echo "<p style='color:rgb(87, 119, 143)'>Database flushed.<br></p>";
 } catch(PDOException $e){
-    echo "Action failed: ".$e->getMessage()."<br>";
+    echo "<p style='color:rgb(87, 119, 143)'>Action failed: ".$e->getMessage()."<br></p>";
 }
 
 $conn = null;
