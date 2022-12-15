@@ -1,10 +1,16 @@
+<html>
+    <body style="background-color:rgba(126,74,28,0.339);">
+        <h1 style="color:rgb(87, 119, 143)"> Im happy you have made it to this Point</h1>
+    </body>
+</html>
+
 <?php
 $servername = "localhost";
 $user = "root";
 $pw = "root";
 
 try {
-    $conn = new PDO("mysql:host=$servername;dbname=ef5_proj", $user, $pw);
+    $conn = new PDO("mysql:host=$servername;dbname=ef5_proj;charset=utf8", $user, $pw);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     echo "<p style='color:rgb(87, 119, 143)'>Connected!<br></p>";
@@ -48,8 +54,24 @@ $anzahl_material = $_POST['ma_anz'];
 $place_material = $_POST['ma_place'];
 $lender_material = $_POST['ma_lender'];
 
-if ($name_material != NULL && $dmx_material != NULL && $watt_material != NULL && $conn_material != NULL && $anzahl_material != NULL && $place_material != NULL && $lender_material!= NULL){
-    $insertIntoMaterial = $conn->prepare("INSERT INTO material(name, anzahl_DMX, watt_draw, connection_type, anzahl, place, lender) VALUES('$name_material', $dmx_material, $watt_material, '$conn_material' , $anzahl_material, $place_material, $lender_material)");
+$check_for_place_material = $conn->prepare("SELECT EXISTS(SELECT id_place FROM place WHERE name = '$place_material');");
+$check_for_place_material->execute();
+$place_material_definitiv = $check_for_place_material->fetchColumn();
+
+if ($place_material_definitiv == 0){
+    throw new Exception("Der angegebene Platz $place_material ist nicht in der Datenbank vorhanden oder falsch geschrieben!");
+};
+
+$check_for_lender_material = $conn->prepare("SELECT EXISTS(SELECT id_lender FROM lender WHERE name = '$lender_material');");
+$check_for_lender_material->execute();
+$lender_material_definitiv = $check_for_lender_material->fetchColumn();
+
+if ($lender_material_definitiv == 0){
+    throw new Exception("Der angegebene Leier $lender_material ist nicht in der Datenbank vorhanden oder falsch geschrieben!");
+};
+
+if ($name_material != NULL && $dmx_material != NULL && $watt_material != NULL && $conn_material != NULL && $anzahl_material != NULL && $place_material_definitiv != NULL && $lender_material_definitiv != NULL){
+    $insertIntoMaterial = $conn->prepare("INSERT INTO material(name, anzahl_DMX, watt_draw, connection_type, anzahl, place, lender) VALUES('$name_material', $dmx_material, $watt_material, '$conn_material' , $anzahl_material, '$place_material_definitiv', $lender_material_definitiv)");
 
     try{
         $insertIntoMaterial->execute();
@@ -92,8 +114,34 @@ $operator_connection = $_POST['con_op'];
 $schicht_connection = $_POST['con_sh'];
 $place_connection = $_POST['con_pl'];
 
-if ($operator_connection != NULL && $schicht_connection != NULL && $place_connection != NULL){
-    $insertIntoConnection = $conn->prepare("INSERT INTO(op, schicht, place) VALUES($operator_connection, $schicht_connection, $place_connection)");
+$check_for_operator_connection = $conn->prepare("SELECT EXISTS(SELECT id_place FROM place WHERE name = '$operator_connection');");
+$check_for_operator_connection->execute();
+$operator_connection_definitiv = $check_for_operator_connection->fetchColumn();
+
+if ($operator_connection_definitiv == 0){
+    throw new Exception("Der angegebene Platz $operator_connection ist nicht in der Datenbank vorhanden oder falsch geschrieben!");
+};
+
+$check_for_schicht_connection = $conn->prepare("SELECT EXISTS(SELECT id_place FROM place WHERE name = '$schicht_connection');");
+$check_for_schicht_connection->execute();
+$schicht_connection_definitiv = $check_for_schicht_connection->fetchColumn();
+
+if ($schicht_connection_definitiv == 0){
+    throw new Exception("Der angegebene Platz $schicht_connection ist nicht in der Datenbank vorhanden oder falsch geschrieben!");
+};
+
+$check_for_place_connection = $conn->prepare("SELECT EXISTS(SELECT id_place FROM place WHERE name = '$place_connection');");
+$check_for_place_connection->execute();
+$place_connection_definitiv = $check_for_place_connection->fetchColumn();
+
+if ($operator_connection_definitiv == 0){
+    throw new Exception("Der angegebene Platz $place_connection ist nicht in der Datenbank vorhanden oder falsch geschrieben!");
+};
+
+
+
+if ($operator_connection_definitiv != NULL && $schicht_connection_definitiv != NULL && $place_connection_definitiv != NULL){
+    $insertIntoConnection = $conn->prepare("INSERT INTO(op, schicht, place) VALUES($operator_connection_definitiv, $schicht_connection_definitiv, $place_connection_definitiv)");
 
     try{
         $insertIntoConnection->execute();

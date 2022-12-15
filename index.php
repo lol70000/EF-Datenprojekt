@@ -109,8 +109,20 @@ try{
     [6,3,3],
     [6,4,3]];
 
-    foreach ($connect as $conn){
-        $insert_connect = $link->prepare("INSERT INTO connection(op, schicht, place) VALUES($conn[0],$conn[1],$conn[2])");
+    foreach ($connect as $conne){
+        $check_for_operator_connection = $link->prepare("SELECT EXISTS(SELECT id_operator FROM operator WHERE name = '$conne[0]');");
+        $check_for_operator_connection->execute();
+        $operator_connection_definitiv = $check_for_operator_connection->fetchColumn();
+
+        $check_for_schicht_connection = $link->prepare("SELECT EXISTS(SELECT id_operator FROM operator WHERE name = '$conne[0]');");
+        $check_for_schicht_connection->execute();
+        $schicht_connection_definitiv = $check_for_schicht_connection->fetchColumn();
+
+        $check_for_place_connection = $link->prepare("SELECT EXISTS(SELECT id_operator FROM operator WHERE name = '$conne[0]');");
+        $check_for_place_connection->execute();
+        $place_connection_definitiv = $check_for_place_connection->fetchColumn();
+
+        $insert_connect = $link->prepare("INSERT INTO connection(op, schicht, place) VALUES($operator_connection_definitiv,$schicht_connection_definitiv,$place_connection_definitiv)");
         $insert_connect->execute();
     };
     echo "<p style='color:rgb(87, 119, 143)'>Connection has been created<br></p>";
@@ -122,3 +134,4 @@ try{
 ?>
 <a href="http://localhost/us_opt1/db_structure.php?server=1&db=ef5_proj" target="_blank">php MyAdmin</a>
 <br><a href="http://localhost/form.php" target="_blank">Insert Values</a>
+<a href="http://localhost/test.php" target="_blank">Lets Test this shit</a>
