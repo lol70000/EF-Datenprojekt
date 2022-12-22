@@ -49,17 +49,25 @@ try{
 
     //Inseting the Values for the Table Material into a list
 
-    $material = [["MAC550",16,300,"DMX",8,1,1],
-    ["MAC600",18,250,"DMX",6,1,1],
-    ["Astera AX3",4,15,"CRMX",8,2,1],
-    ["Astera AX5",4,45,"CRMX",8,2,1],
-    ["Mikrofon Set",0,0,"XLR",3,1,1],
-    ["Bühnen Teile und Trassen",0,0,"Mechanical",200,1,1],
-    ["PA System",0,900,"XLR/DATACON",1,1,1],
-    ["Hallen Boden",0,0,"Klebeband",1,1,2]];
+    $material = [["MAC550",16,300,"DMX",8,"Turnhalle","Dürst Eventtechnik"],
+    ["MAC600",18,250,"DMX",6,"Turnhalle","Dürst Eventtechnik"],
+    ["Astera AX3",4,15,"CRMX",8,"Robotic","Dürst Eventtechnik"],
+    ["Astera AX5",4,45,"CRMX",8,"Robotic","Dürst Eventtechnik"],
+    ["Mikrofon Set",0,0,"XLR",3,"Turnhalle","Dürst Eventtechnik"],
+    ["Bühnen Teile und Trassen",0,0,"Mechanical",200,"Turnhalle","Dürst Eventtechnik"],
+    ["PA System",0,900,"XLR/DATACON",1,"Turnhalle","Dürst Eventtechnik"],
+    ["Hallen Boden",0,0,"Klebeband",1,"Turnhalle","Hunghäfä"]];
 
     foreach ($material as $mat){
-        $insert_material = $link->prepare("INSERT INTO material(`name`,anzahl_DMX,watt_draw,connection_type,anzahl,place,lender) VALUES('$mat[0]',$mat[1],$mat[2],'$mat[3]',$mat[4],$mat[5],$mat[6])");
+        $check_for_place_material = $link->prepare("SELECT EXISTS(SELECT id_place FROM place WHERE name = '$mat[5]');");
+        $check_for_place_material->execute();
+        $place_material_definitiv = $check_for_place_material->fetchColumn();
+
+        $check_for_lender_material = $link->prepare("SELECT EXISTS(SELECT id_lender FROM lender WHERE name = '$mat[6]');");
+        $check_for_lender_material->execute();
+        $lender_material_definitiv = $check_for_lender_material->fetchColumn();
+
+        $insert_material = $link->prepare("INSERT INTO material(`name`,anzahl_DMX,watt_draw,connection_type,anzahl,place,lender) VALUES('$mat[0]',$mat[1],$mat[2],'$mat[3]',$mat[4],$place_material_definitiv,$lender_material_definitiv)");
         $insert_material->execute();
     };
     echo "<p style='color:rgb(87, 119, 143)'>Material has been created<br></p>";
@@ -70,7 +78,7 @@ try{
     ["Freitag_Morgen",800,1200],
     ["Freitag_Nachmittag",1300,1930],
     ["Freitag_Kaba1",1930,2300],
-    ["Freitag_Kaba",2300,300],
+    ["Freitag_Kaba2",2300,300],
     ["Samstag_Aufräumen",300,1200],
     ["All",1700,1200]];
 
@@ -96,29 +104,29 @@ try{
     echo "<p style='color:rgb(87, 119, 143)'>Operator has been created<br></p>";
     //Inseting the Values for the Table Connect into a list
 
-    $connect = [[1,1,1],
-    [1,2,1],
-    [1,4,2],
-    [2,4,2],
-    [3,5,2],
-    [3,1,1],
-    [4,7,1],
-    [5,4,1],
-    [5,5,1],
-    [5,6,1],
-    [6,3,3],
-    [6,4,3]];
+    $connect = [["Cyrill","Donnerstag_Abend","Robotic"],
+    ["Cyrill","Freitag_Morgen","Turnhalle"],
+    ["Cyrill","Freitag_Kaba1","Robotic"],
+    ["Alicia","Freitag_Kaba1","Robotic"],
+    ["Laurin","Freitag_Morgen","Robotic"],
+    ["Laurin","Samstag_Aufräumen","Turnhalle"],
+    ["Tobias","All","Turnhalle"],
+    ["Sebastian","Freitag_Kaba1","Turnhalle"],
+    ["Sebastian","Freitag_Kaba2","Turnhalle"],
+    ["Sebastian","Freitag_Nachmittag","Turnhalle"],
+    ["Kajanan","Freitag_Nachmittag","Aula"],
+    ["Kajanan","Freitag_Kaba1","Aula"]];
 
     foreach ($connect as $conne){
         $check_for_operator_connection = $link->prepare("SELECT EXISTS(SELECT id_operator FROM operator WHERE name = '$conne[0]');");
         $check_for_operator_connection->execute();
         $operator_connection_definitiv = $check_for_operator_connection->fetchColumn();
 
-        $check_for_schicht_connection = $link->prepare("SELECT EXISTS(SELECT id_operator FROM operator WHERE name = '$conne[0]');");
+        $check_for_schicht_connection = $link->prepare("SELECT EXISTS(SELECT id_schicht FROM schicht WHERE name = '$conne[1]');");
         $check_for_schicht_connection->execute();
         $schicht_connection_definitiv = $check_for_schicht_connection->fetchColumn();
 
-        $check_for_place_connection = $link->prepare("SELECT EXISTS(SELECT id_operator FROM operator WHERE name = '$conne[0]');");
+        $check_for_place_connection = $link->prepare("SELECT EXISTS(SELECT id_place FROM place WHERE name = '$conne[2]');");
         $check_for_place_connection->execute();
         $place_connection_definitiv = $check_for_place_connection->fetchColumn();
 
@@ -134,4 +142,5 @@ try{
 ?>
 <a href="http://localhost/us_opt1/db_structure.php?server=1&db=ef5_proj" target="_blank">php MyAdmin</a>
 <br><a href="http://localhost/form.php" target="_blank">Insert Values</a>
-<a href="http://localhost/test.php" target="_blank">Lets Test this shit</a>
+<br><a href="http://localhost/test.php" target="_blank">Lets Test this shit</a>
+<br><a href="http://localhost/from_alter.php" target="_blank">Here you may alter Values</a>

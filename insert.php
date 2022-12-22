@@ -1,6 +1,8 @@
 <html>
     <body style="background-color:rgba(126,74,28,0.339);">
         <h1 style="color:rgb(87, 119, 143)"> Im happy you have made it to this Point</h1>
+
+        
     </body>
 </html>
 
@@ -114,7 +116,7 @@ $operator_connection = $_POST['con_op'];
 $schicht_connection = $_POST['con_sh'];
 $place_connection = $_POST['con_pl'];
 
-$check_for_operator_connection = $conn->prepare("SELECT EXISTS(SELECT id_place FROM place WHERE name = '$operator_connection');");
+$check_for_operator_connection = $conn->prepare("SELECT EXISTS(SELECT id_operator FROM operator WHERE name = '$operator_connection');");
 $check_for_operator_connection->execute();
 $operator_connection_definitiv = $check_for_operator_connection->fetchColumn();
 
@@ -122,7 +124,7 @@ if ($operator_connection_definitiv == 0){
     throw new Exception("Der angegebene Platz $operator_connection ist nicht in der Datenbank vorhanden oder falsch geschrieben!");
 };
 
-$check_for_schicht_connection = $conn->prepare("SELECT EXISTS(SELECT id_place FROM place WHERE name = '$schicht_connection');");
+$check_for_schicht_connection = $conn->prepare("SELECT EXISTS(SELECT id_schicht FROM schicht WHERE name = '$schicht_connection');");
 $check_for_schicht_connection->execute();
 $schicht_connection_definitiv = $check_for_schicht_connection->fetchColumn();
 

@@ -5,7 +5,6 @@
     </head>
 
     <body style="background-color:rgba(126,74,28,0.339);">
-        <a href="http://localhost/us_opt1/db_structure.php?server=1&db=ef5_proj" target="_blank">php MyAdmin in order to see indecies</a>
 
         <h1 style="color:rgb(87, 119, 143)">Formular</h1>
 
