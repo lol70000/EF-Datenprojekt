@@ -46,6 +46,4 @@ try{
     echo"<p style='color:rgb(87, 119. 143)'>Connection failed. " . $e->getMessage()."</p>";
 };
 
-
-
 ?>
