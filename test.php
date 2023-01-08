@@ -2,13 +2,7 @@
 
 <?php
 
-// mysql console:
-// 
-// Zeige alle Datenbanken:
-// mysql> show databases;
-//
-// Erstelle eine Datenbank "test_ef5":
-// mysql> CREATE DATABASE test_ef5;
+//Here the Database is being tested in a few diffenrent ways 1.With a walue that is to large 2. with one that is god so as to that that the database works
 
 $servername = "localhost";
 $user = "root";
@@ -24,9 +18,6 @@ try {
 }
 
 $test_place= ["trololoololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololololol"];
-
-
-
 
 foreach ($test_place as $value) {
     $insert = "

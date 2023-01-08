@@ -17,7 +17,7 @@ try{
     echo "<p style='color:rgb(87, 119, 143)'>Connection failed.<br></p>". $e->getMessage();
 }
 
-//Droping Database and creating it again in order to enshure no items are in the Database twice
+//Droping Database and creating it again in order to enshure no items are accidentaly in the Database twice at initiation
 
 try{
     $conn->exec("DROP DATABASE ef5_proj");

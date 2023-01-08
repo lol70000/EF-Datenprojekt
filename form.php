@@ -1,14 +1,21 @@
 <html>
 
+    <!-- Here the title to the page is set-->
     <head>
         <title>Datenbankformular</title>
     </head>
 
+    <!--The Backgroundcolor is set-->
     <body style="background-color:rgba(126,74,28,0.339);">
 
         <h1 style="color:rgb(87, 119, 143)">Formular</h1>
 
+        <!--The Post method is initiated to be used in the insert.php-->
+
         <form action="insert.php" method="POST">
+
+            <!--In the following lines the buttons are set each with theyr corresponding limit so that you could input into each entity if you wanted-->
+
             <label for="pl_name" style="color:rgb(87, 119, 143)">Name of the Place</label>
             <br><input type="text" id="pl_name" name="pl_name" maxlength="100">
             <hr>
@@ -17,23 +24,23 @@
             <br><input type="text" id="ln_name" name="ln_name" maxlength="100">
 
             <br><label for="ln_money" style="color:rgb(87, 119, 143)">Money owed to the Lender</label>
-            <br><input type="number" id="ln_money" name="ln_money">
+            <br><input type="number" id="ln_money" name="ln_money" max="1000">
             <hr>
             
             <br><label for="ma_name" style="color:rgb(87, 119, 143)">Material Name</label>
             <br><input type="text" id="ma_name" name="ma_name" maxlength="100">
 
             <br><label for="ma_dmx" style="color:rgb(87, 119, 143)">Anzahl Dmx </label>
-            <br><input type="number" id="ma_dmx" name="ma_dmx">
+            <br><input type="number" id="ma_dmx" name="ma_dmx" max="1000">
 
             <br><label for="ma_watt" style="color:rgb(87, 119, 143)">Watt draw </label>
-            <br><input type="number" id="ma_watt" name="ma_watt">
+            <br><input type="number" id="ma_watt" name="ma_watt" max="1000">
 
             <br><label for="ma_con_type" style="color:rgb(87, 119, 143)">Connection Type</label>
             <br><input type="text" id="ma_con_type" name="ma_con_type" maxlength="100">
 
             <br><label for="ma_anz" style="color:rgb(87, 119, 143)">Anzahl</label>
-            <br><input type="number" id="ma_anz" name="ma_anz">
+            <br><input type="number" id="ma_anz" name="ma_anz" max="1000">
 
             <br><label for="ma_place" style="color:rgb(87, 119, 143)">Platz wohin es muss </label>
             <br><input type="text" id="ma_place" name="ma_place" maxlength="100">
@@ -46,10 +53,10 @@
             <br><input type="text" id="sh_name" name="sh_name" maxlength="100">
 
             <br><label for="sh_beginn" style="color:rgb(87, 119, 143)">Start Zeit der Schicht</label>
-            <br><input type="number" id="sh_beginn" name="sh_beginn">
+            <br><input type="number" id="sh_beginn" name="sh_beginn" max="2401">
 
             <br><label for="sh_end" style="color:rgb(87, 119, 143)">Ende der Schicht</label>
-            <br><input type="number" id="sh_end" name="sh_end">
+            <br><input type="number" id="sh_end" name="sh_end" max="2401">
             <hr>
             
             <br><label for="op_name" style="color:rgb(87, 119, 143)">Name des Bedieners</label>
@@ -67,6 +74,8 @@
 
             <br><label for="con_pl" style="color:rgb(87, 119, 143)">Platz </label>
             <br><input type="text" id="con_pl" name="con_pl" maxlength="100">
+
+            <!--The Submit Button is set-->
         
             <br><input type="submit" value="absenden">
         </form>

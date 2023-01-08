@@ -59,9 +59,14 @@ try{
     ["Hallen Boden",0,0,"Klebeband",1,"Turnhalle","Hunghäfä"]];
 
     foreach ($material as $mat){
+        
+        //Getting the id's for the places from the place Entity
+
         $check_for_place_material = $link->prepare("SELECT EXISTS(SELECT id_place FROM place WHERE name = '$mat[5]');");
         $check_for_place_material->execute();
         $place_material_definitiv = $check_for_place_material->fetchColumn();
+
+        //Getting the id's for the lenders from the lender Entity
 
         $check_for_lender_material = $link->prepare("SELECT EXISTS(SELECT id_lender FROM lender WHERE name = '$mat[6]');");
         $check_for_lender_material->execute();
@@ -102,6 +107,7 @@ try{
         $insert_operator->execute();
     };
     echo "<p style='color:rgb(87, 119, 143)'>Operator has been created<br></p>";
+
     //Inseting the Values for the Table Connect into a list
 
     $connect = [["Cyrill","Donnerstag_Abend","Robotic"],
@@ -118,13 +124,20 @@ try{
     ["Kajanan","Freitag_Kaba1","Aula"]];
 
     foreach ($connect as $conne){
+
+        //Getting the id's for the operator from the operator Entity
+
         $check_for_operator_connection = $link->prepare("SELECT EXISTS(SELECT id_operator FROM operator WHERE name = '$conne[0]');");
         $check_for_operator_connection->execute();
         $operator_connection_definitiv = $check_for_operator_connection->fetchColumn();
 
+        //Getting the id's for the schicht from the schicht Entity
+
         $check_for_schicht_connection = $link->prepare("SELECT EXISTS(SELECT id_schicht FROM schicht WHERE name = '$conne[1]');");
         $check_for_schicht_connection->execute();
         $schicht_connection_definitiv = $check_for_schicht_connection->fetchColumn();
+
+        //Getting the id's for the places from the place Entity
 
         $check_for_place_connection = $link->prepare("SELECT EXISTS(SELECT id_place FROM place WHERE name = '$conne[2]');");
         $check_for_place_connection->execute();
@@ -135,12 +148,17 @@ try{
     };
     echo "<p style='color:rgb(87, 119, 143)'>Connection has been created<br></p>";
 
+    //Seting a 'trap' for uncaught exeptions
+
 }catch(PDOException $e){
     echo "<p style='color:rgb(87, 119, 143)'>creation failed.<br></p>" . $e -> getmessage();
 }
+
+//Putting all the links to the pages at the bottom of the page
 
 ?>
 <a href="http://localhost/us_opt1/db_structure.php?server=1&db=ef5_proj" target="_blank">php MyAdmin</a>
 <br><a href="http://localhost/form.php" target="_blank">Insert Values</a>
 <br><a href="http://localhost/test.php" target="_blank">Lets Test this shit</a>
 <br><a href="http://localhost/from_alter.php" target="_blank">Here you may alter Values</a>
+<br><a href="http://localhost/output.php" target="_blank">Here you can see the output</a>
